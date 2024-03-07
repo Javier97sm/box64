@@ -92,6 +92,9 @@ GO(g_base64_encode, pFpL)
 GO(g_base64_encode_close, LFippp)
 GO(g_base64_encode_step, LFpLippp)
 GO(g_basename, pFp)
+GO(g_binding_get_source, pFp)
+GO(g_binding_get_source_property, pFp)
+GO(g_binding_get_target, pFp)
 //GO(g_bit_lock, 
 GO(g_bit_nth_lsf, iFii)
 GO(g_bit_nth_msf, iFLi)
@@ -156,7 +159,7 @@ GO(g_byte_array_remove_range, pFpuu)
 GO(g_byte_array_set_size, pFpu)
 GO(g_byte_array_sized_new, pFu)
 //GOM(g_byte_array_sort, vFpB)
-//GOM(g_byte_array_sort_with_data, vFpBp)
+GOM(g_byte_array_sort_with_data, vFpBp)
 GO(g_byte_array_unref, vFp)
 GO(g_bytes_compare, iFpp)
 GO(g_bytes_equal, iFpp)
@@ -178,13 +181,15 @@ GO(g_cache_insert, pFpp)
 //GO(g_cache_new, 
 GO(g_cache_remove, vFpp)
 //GO(g_cache_value_foreach, 
+GO(g_canonicalize_filename, pFpp)
 GO(g_chdir, iFp)
 GO(g_checksum_copy, pFp)
 GO(g_checksum_free, vFp)
 GO(g_checksum_get_digest, vFppp)
 GO(g_checksum_get_string, pFp)
+GO(g_checksum_get_type, pFv)
 GO(g_checksum_new, pFu)
-//GO(g_checksum_reset, 
+GO(g_checksum_reset, vFp)
 GO(g_checksum_type_get_length, lFu)
 GO(g_checksum_update, vFppl)
 GOM(g_child_watch_add, uFEipp)
@@ -217,7 +222,7 @@ GO(g_cond_timed_wait, iFppp)
 GO(g_cond_wait, vFpp)
 GO(g_cond_wait_until, iFppl)
 GO(g_convert, pFplppppp)
-//GO(g_convert_error_quark, 
+GO(g_convert_error_quark, uFv)
 GO(g_convert_with_fallback, pFplpppppp)
 GO(g_convert_with_iconv, pFplpppp)
 GO(g_creat, iFpi)
@@ -279,47 +284,50 @@ GO(g_date_subtract_days, vFpu)
 GO(g_date_subtract_months, vFpu)
 GO(g_date_subtract_years, vFpu)
 GO(g_date_time_add, pFpl)
-//GO(g_date_time_add_days, 
+GO(g_date_time_add_days, pFpi)
 GO(g_date_time_add_full, pFpiiiiid)
-//GO(g_date_time_add_hours, 
+GO(g_date_time_add_hours, pFpi)
 GO(g_date_time_add_minutes, pFpi)
-//GO(g_date_time_add_months, 
+GO(g_date_time_add_months, pFpi)
 GO(g_date_time_add_seconds, pFpd)
-//GO(g_date_time_add_weeks, 
-//GO(g_date_time_add_years, 
-//GO(g_date_time_compare, 
+GO(g_date_time_add_weeks, pFpi)
+GO(g_date_time_add_years, pFpi)
+GO(g_date_time_compare, iFpp)
 GO(g_date_time_difference, lFpp)
-//GO(g_date_time_equal, 
+GO(g_date_time_equal, iFpp)
 GO(g_date_time_format, pFpp)
-//GO(g_date_time_get_day_of_month, 
-//GO(g_date_time_get_day_of_week, 
-//GO(g_date_time_get_day_of_year, 
-//GO(g_date_time_get_hour, 
+GO(g_date_time_format_iso8601, pFp)
+GO(g_date_time_get_day_of_month, iFp)
+GO(g_date_time_get_day_of_week, iFp)
+GO(g_date_time_get_day_of_year, iFp)
+GO(g_date_time_get_hour, iFp)
 GO(g_date_time_get_microsecond, iFp)
-//GO(g_date_time_get_minute, 
-//GO(g_date_time_get_month, 
-//GO(g_date_time_get_second, 
+GO(g_date_time_get_minute, iFp)
+GO(g_date_time_get_month, pFi)
+GO(g_date_time_get_second, pFi)
 GO(g_date_time_get_seconds, dFp)
+GO(g_date_time_get_timezone, pFp)
 GO(g_date_time_get_timezone_abbreviation, pFp)
 GO(g_date_time_get_utc_offset, lFp)
-//GO(g_date_time_get_week_numbering_year, 
-//GO(g_date_time_get_week_of_year, 
-//GO(g_date_time_get_year, 
+GO(g_date_time_get_week_numbering_year, iFp)
+GO(g_date_time_get_week_of_year, iFp)
+GO(g_date_time_get_year, iFp)
 GO(g_date_time_get_ymd, vFpppp)
-//GO(g_date_time_hash, 
+GO(g_date_time_hash, uFp)
 GO(g_date_time_is_daylight_savings, iFp)
 GO(g_date_time_new, pFpiiiiid)
-//GO(g_date_time_new_from_timeval_local, 
+GO(g_date_time_new_from_iso8601, pFpp)
+GO(g_date_time_new_from_timeval_local, pFp)
 GO(g_date_time_new_from_timeval_utc, pFp)
-//GO(g_date_time_new_from_unix_local, 
+GO(g_date_time_new_from_unix_local, pFl)
 GO(g_date_time_new_from_unix_utc, pFl)
-//GO(g_date_time_new_local, 
+GO(g_date_time_new_local, pFiiiiid)
 GO(g_date_time_new_now, pFp)
-//GO(g_date_time_new_now_local, 
+GO(g_date_time_new_now_local, pFv)
 GO(g_date_time_new_now_utc, pFv)
 GO(g_date_time_new_utc, pFiiiiid)
-//GO(g_date_time_ref, 
-//GO(g_date_time_to_local, 
+GO(g_date_time_ref, pFp)
+GO(g_date_time_to_local, pFp)
 GO(g_date_time_to_timeval, iFpp)
 GO(g_date_time_to_timezone, pFpp)
 GO(g_date_time_to_unix, lFp)
@@ -530,6 +538,7 @@ GO(g_key_file_get_int64, lFpppp)
 GO(g_key_file_get_integer, iFpppp)
 GO(g_key_file_get_integer_list, pFppppp)
 GO(g_key_file_get_keys, pFpppp)
+GO(g_key_file_get_locale_for_key, pFpppp)
 GO(g_key_file_get_locale_string, pFppppp)
 GO(g_key_file_get_locale_string_list, pFpppppp)
 GO(g_key_file_get_start_group, pFp)
@@ -626,7 +635,7 @@ GO(g_main_context_find_source_by_user_data, pFpp)
 GOM(g_main_context_get_poll_func, pFEp)
 GO(g_main_context_get_thread_default, pFv)
 //GOM(g_main_context_invoke, vFppp)  // 2nd is GSourceFuncs
-//GOM(g_main_context_invoke_full, vFpippB)  // 3rd is GSourceFuncs
+GOM(g_main_context_invoke_full, vFpippB)  // 3rd is GSourceFuncs
 GO(g_main_context_is_owner, iFp)
 GO(g_main_context_iteration, iFpi)
 GO(g_main_context_new, pFv)
@@ -665,7 +674,7 @@ GO(g_mapped_file_new_from_fd, pFiip)
 GO(g_mapped_file_ref, pFp)
 GO(g_mapped_file_unref, vFp)
 //GO(g_markup_collect_attributes, 
-//GO(g_markup_error_quark, 
+GO(g_markup_error_quark, pFv)
 GO(g_markup_escape_text, pFpl)
 GO(g_markup_parse_context_end_parse, iFpp)
 GO(g_markup_parse_context_free, vFp)
@@ -751,6 +760,7 @@ GO(g_node_push_allocator, vFp)
 GOM(g_node_traverse, vFEpiiipp)
 //GO(g_node_unlink, 
 GO(g_nullify_pointer, vFp)
+GO(g_object_bind_property_full, pFppppuppp)
 GOM(g_once_impl, pFEppp)
 GO(g_once_init_enter, iFp)
 GO(g_once_init_enter_impl, iFp)
@@ -777,16 +787,16 @@ GO(g_option_context_set_ignore_unknown_options, vFpi)
 GO(g_option_context_set_main_group, vFpp)
 GO(g_option_context_set_strict_posix, vFpi) // 2.44+
 GO(g_option_context_set_summary, vFpp)
-//GOM(g_option_context_set_translate_func, vFEpBpB)
+GOM(g_option_context_set_translate_func, vFEpBpB)
 GO(g_option_context_set_translation_domain, vFpp)
 GO(g_option_error_quark, pFv)
 GO(g_option_group_add_entries, vFpp)
 GO(g_option_group_free, vFp)
 GOM(g_option_group_new, pFEppppp)
 GO(g_option_group_ref, pFp) // 2.44+
-//GOM(g_option_group_set_error_hook, vFEpB)
+GOM(g_option_group_set_error_hook, vFEpB)
 GOM(g_option_group_set_parse_hooks, vFEppp)
-//GOM(g_option_group_set_translate_func, vFEpBpB)
+GOM(g_option_group_set_translate_func, vFEpBpB)
 GO(g_option_group_set_translation_domain, vFpp)
 GO(g_option_group_unref, vFp)   // 2.44+
 GO(g_parse_debug_string, uFppu)
@@ -906,7 +916,7 @@ GO(g_rec_mutex_lock, vFp)
 GO(g_rec_mutex_trylock, iFp)
 GO(g_rec_mutex_unlock, vFp)
 GO(g_regex_check_replacement, iFppp)
-//GO(g_regex_error_quark, 
+GO(g_regex_error_quark, uFv)
 GO(g_regex_escape_nul, pFpi)
 GO(g_regex_escape_string, pFpi)
 GO(g_regex_get_capture_count, iFp)
@@ -925,7 +935,7 @@ GO(g_regex_match_simple, iFppuu)
 GO(g_regex_new, pFpuup)
 GO(g_regex_ref, pFp)
 GO(g_regex_replace, pFppLipip)
-//GOM(g_regex_replace_eval, pFEppLiiBpp)
+GOM(g_regex_replace_eval, pFEppLiiBpp)
 GO(g_regex_replace_literal, pFpplipup)
 GO(g_regex_split, pFppu)
 GO(g_regex_split_full, pFppliuip)
@@ -945,14 +955,14 @@ GO(g_remove, iFp)
 GO(g_rename, iFpp)
 GO(g_return_if_fail_warning, vFppp)
 GO(g_rmdir, iFp)
-//GO(g_rw_lock_clear, 
-//GO(g_rw_lock_init, 
-//GO(g_rw_lock_reader_lock, 
+GO(g_rw_lock_clear, vFp)
+GO(g_rw_lock_init, vFp)
+GO(g_rw_lock_reader_lock, vFp)
 GO(g_rw_lock_reader_trylock, iFp)
 GO(g_rw_lock_reader_unlock, vFp)
-//GO(g_rw_lock_writer_lock, 
-//GO(g_rw_lock_writer_trylock, 
-//GO(g_rw_lock_writer_unlock, 
+GO(g_rw_lock_writer_lock, vFp)
+GO(g_rw_lock_writer_trylock, iFp)
+GO(g_rw_lock_writer_unlock, vFp)
 //GO(g_scanner_cur_line, 
 //GO(g_scanner_cur_position, 
 //GO(g_scanner_cur_token, 
@@ -1018,7 +1028,7 @@ GO(g_set_error_literal, vFpuip)
 GO(g_set_prgname, vFp)
 GOM(g_set_printerr_handler, pFEp)
 GOM(g_set_print_handler, pFEp)
-//GO(g_shell_error_quark, 
+GO(g_shell_error_quark, uFv)
 GO(g_shell_parse_argv, iFpppp)
 GO(g_shell_quote, pFp)
 GO(g_shell_unquote, pFpp)
@@ -1271,20 +1281,20 @@ GO(g_thread_get_initialized, iFv)
 //GO(g_thread_init_glib, 
 GO(g_thread_join, pFp)
 GOM(g_thread_new, pFEppp)
-//GO(g_thread_pool_free, 
+GO(g_thread_pool_free, vFpii)
 GO(g_thread_pool_get_max_idle_time, uFv)
-//GO(g_thread_pool_get_max_threads, 
+GO(g_thread_pool_get_max_threads, pFi)
 GO(g_thread_pool_get_max_unused_threads, iFv)
-//GO(g_thread_pool_get_num_threads, 
-//GO(g_thread_pool_get_num_unused_threads, 
-//GO(g_thread_pool_new, 
-//GO(g_thread_pool_push, 
+GO(g_thread_pool_get_num_threads, iFp)
+GO(g_thread_pool_get_num_unused_threads, uFv)
+GOM(g_thread_pool_new, pFEpppiip)
+GO(g_thread_pool_push, iFppp)
 GO(g_thread_pool_set_max_idle_time, vFu)
-//GO(g_thread_pool_set_max_threads, 
+GO(g_thread_pool_set_max_threads, iFpip)
 GO(g_thread_pool_set_max_unused_threads, vFi)
 //GO(g_thread_pool_set_sort_function, 
-//GO(g_thread_pool_stop_unused_threads, 
-//GO(g_thread_pool_unprocessed, 
+GO(g_thread_pool_stop_unused_threads, vFv)
+GO(g_thread_pool_unprocessed, uFv)
 GO(g_thread_ref, pFp)
 GO(g_thread_self, pFv)
 GO(g_thread_set_priority, vFpi)
@@ -1298,12 +1308,12 @@ GOM(g_timeout_add_seconds_full, uFEiuppp)
 GO(g_timeout_source_new, pFu)
 GO(g_timeout_source_new_seconds, pFu)
 //GO(g_timer_continue, 
-//GO(g_timer_destroy, 
+GO(g_timer_destroy, vFp)
 GO(g_timer_elapsed, dFpp)
 GO(g_timer_new, pFv)
-//GO(g_timer_reset, 
-//GO(g_timer_start, 
-//GO(g_timer_stop, 
+GO(g_timer_reset, vFp)
+GO(g_timer_start, vFp)
+GO(g_timer_stop, vfp)
 GO(g_time_val_add, vFpl)
 GO(g_time_val_from_iso8601, iFpp)
 GO(g_time_val_to_iso8601, pFp)
@@ -1311,12 +1321,13 @@ GO(g_time_zone_adjust_time, iFpup)
 GO(g_time_zone_find_interval, iFpul)
 GO(g_time_zone_get_abbreviation, pFpi)
 GO(g_time_zone_get_offset, iFpi)
+GO(g_time_zone_get_identifier, pFp)
 GO(g_time_zone_is_dst, iFpi)
-//GO(g_time_zone_new, 
+GO(g_time_zone_new, pFpp)
 GO(g_time_zone_new_local, pFv)
-//GO(g_time_zone_new_utc, 
+GO(g_time_zone_new_utc, pFv)
 GO(g_time_zone_ref, pFp)
-//GO(g_time_zone_unref, 
+GO(g_time_zone_unref, vFp)
 GO(g_trash_stack_height, uFp)
 GO(g_trash_stack_peek, pFp)
 GO(g_trash_stack_pop, pFp)
@@ -1338,6 +1349,7 @@ GO(g_tree_replace, vFppp)
 GO(g_tree_steal, iFpp)
 //GO(g_tree_traverse, 
 //GO(g_tree_unref, 
+GO(g_type_module_register_type, pFppppi)
 GO(g_try_malloc, pFL)
 GO(g_try_malloc0, pFL)
 GO(g_try_malloc0_n, pFLL)
@@ -1415,6 +1427,7 @@ GO(g_utf8_find_prev_char, pFpp)
 GO(g_utf8_get_char, uFp)
 GO(g_utf8_get_char_validated, uFpl)
 GO(g_utf8_normalize, pFplu)
+GO(g_utf8_make_valid, pFpi)
 GO(g_utf8_offset_to_pointer, pFpl)
 GO(g_utf8_pointer_to_offset, lFpp)
 GO(g_utf8_prev_char, pFp)
@@ -1545,7 +1558,7 @@ GOM(g_variant_new_va, pFEppp)
 GO(g_variant_new_variant, pFp)
 GO(g_variant_parse, pFppppp)
 GO(g_variant_parse_error_print_context, pFpp)
-//GO(g_variant_parse_error_quark, 
+GO(g_variant_parse_error_quark, uFv)
 //GO(g_variant_parser_get_error_quark, 
 GO(g_variant_print, pFpi)
 GO(g_variant_print_string, pFppi)
@@ -1565,11 +1578,12 @@ GO(g_variant_take_ref, pFp)
 GO(g_variant_type_checked_, pFp)
 GO(g_variant_type_copy, pFp)
 GO(g_variant_type_dup_string, pFp)
-//GO(g_variant_type_element, 
+GO(g_variant_type_element, pFp)
 GO(g_variant_type_equal, iFpp)
-//GO(g_variant_type_first, 
+GO(g_variant_type_first, pFp)
 GO(g_variant_type_free, vFp)
 GO(g_variant_type_get_string_length, LFp)
+GO(g_variant_type_get_gtype, pFv)
 GO(g_variant_type_hash, uFp)
 //GO(g_variant_type_info_assert_no_infos, 
 GO(g_variant_type_info_element, pFp)
