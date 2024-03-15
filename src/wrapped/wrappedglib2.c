@@ -1250,6 +1250,11 @@ EXPORT int my_g_printf(x64emu_t* emu, void* fmt, uintptr_t* b)
     return my->g_vprintf(fmt, VARARGS);
 }
 
+EXPORT void* my_g_regex_replace_eval(x64emu_t* emu, void* a, void* b, unsigned long c, int d, int e, void* f, void* g, void* h)
+{
+    return my->g_regex_replace_eval(a, b, c, d, e, f, g, h);
+}
+
 EXPORT int my_g_snprintf(x64emu_t* emu, void* buf, size_t l, void* fmt, uintptr_t* b)
 {
     myStackAlign(emu, fmt, b, emu->scratch, R_EAX, 3);
