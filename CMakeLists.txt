@@ -396,6 +396,7 @@ set(INTERPRETER
     "${BOX64_ROOT}/src/emu/x64runf0.c"
     "${BOX64_ROOT}/src/emu/x64runf20f.c"
     "${BOX64_ROOT}/src/emu/x64runf30f.c"
+    "${BOX64_ROOT}/src/emu/x64runavx.c"
 )
 
 if(STATICBUILD)
