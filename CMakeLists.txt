@@ -1257,12 +1257,13 @@ add_test(lock ${CMAKE_COMMAND} -D TEST_PROGRAM=${CMAKE_BINARY_DIR}/${BOX64}
     -D TEST_REFERENCE=${CMAKE_SOURCE_DIR}/tests/ref29.txt
     -P ${CMAKE_SOURCE_DIR}/runTest.cmake )
 
-add_test(verifyApiRunX64Function ${CMAKE_COMMAND} -D TEST_PROGRAM=${CMAKE_SOURCE_DIR}/tests/test30
+add_test(avx_intrinsics ${CMAKE_COMMAND} -D TEST_PROGRAM=${CMAKE_BINARY_DIR}/${BOX64}
     -D TEST_ARGS=${CMAKE_SOURCE_DIR}/tests/test30 -D TEST_OUTPUT=tmpfile30.txt
     -D TEST_REFERENCE=${CMAKE_SOURCE_DIR}/tests/ref30.txt
     -P ${CMAKE_SOURCE_DIR}/runTest.cmake )
 
-# TODO: Add ut case for API `uintptr_t BuildBridge(uintptr_t arm64_symbol)`
+set_tests_properties(avx_intrinsics PROPERTIES ENVIRONMENT "BOX64_DYNAREC_FASTNAN=0;BOX64_DYNAREC_FASTROUND=0;BOX64_AVX=2")
+
 else()
 
 add_test(bootSyscall ${CMAKE_COMMAND} -D TEST_PROGRAM=${CMAKE_BINARY_DIR}/${BOX64}
@@ -1399,6 +1400,15 @@ add_test(lock ${CMAKE_COMMAND} -D TEST_PROGRAM=${CMAKE_BINARY_DIR}/${BOX64}
     -D TEST_ARGS=${CMAKE_SOURCE_DIR}/tests/test29_android -D TEST_OUTPUT=tmpfile29.txt
     -D TEST_REFERENCE=${CMAKE_SOURCE_DIR}/tests/ref29.txt
     -P ${CMAKE_SOURCE_DIR}/runTest.cmake )
+
+#add_test(avx_intrinsics ${CMAKE_COMMAND} -D TEST_PROGRAM=${CMAKE_BINARY_DIR}/${BOX64}
+#    -D TEST_ARGS=${CMAKE_SOURCE_DIR}/tests/test30_android -D TEST_OUTPUT=tmpfile30.txt
+#    -D TEST_REFERENCE=${CMAKE_SOURCE_DIR}/tests/ref30.txt
+#    -P ${CMAKE_SOURCE_DIR}/runTest.cmake )
+#
+#set_tests_properties(avx_intrinsics PROPERTIES ENVIRONMENT "BOX64_DYNAREC_FASTNAN=0;BOX64_DYNAREC_FASTROUND=0 BOX64_AVX=2")
+
+
 endif()
 
 if(NOT ANDROID)
