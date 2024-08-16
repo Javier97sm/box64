@@ -101,11 +101,8 @@ EXPORT int Initialize()
 
 void* my_dlopen(x64emu_t* emu, void *filename, int flag);   // defined in wrappedlibdl.c
 
-EXPORT uintptr_t RunX64Function(const char* x64_libname, const char* funcname, int nargs, ...)
+EXPORT elfheader_t* LoadX64Library(const char* x64_libname)
 {
-    static pthread_mutex_t box64_mutex;
-    pthread_mutex_lock(&box64_mutex);
-
     // 1. Load the library.
     // Note: We choose binding all symbols when opening the library,
     // which might output some warnings like "Warning: Weak Symbol
@@ -131,15 +128,19 @@ EXPORT uintptr_t RunX64Function(const char* x64_libname, const char* funcname, i
         abort();
     }
 
+    return elf_header;
+}
+
+EXPORT uintptr_t RunX64Function(elfheader_t* elf_header, const char* funcname, int nargs, ...)
+{
     // 3. Call func in emulator.
     uintptr_t x64_symbol_addr = 0;
     int ver = -1, veropt = 0;
     const char* vername = NULL;
     if (!ElfGetGlobalSymbolStartEnd(elf_header, &x64_symbol_addr, NULL, funcname, &ver, &vername, 1, &veropt)) {
-        printf_log(LOG_NONE, "Symbol %s not found in library %s !\n", funcname, x64_libname);
+        printf_log(LOG_NONE, "Symbol %s not found!\n", funcname);
         abort();
     }
-    pthread_mutex_unlock(&box64_mutex);
 
     va_list va;
     va_start(va, nargs);
