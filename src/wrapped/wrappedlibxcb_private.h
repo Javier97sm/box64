@@ -514,7 +514,7 @@ GO(xcb_query_tree_unchecked, pFbu)
 //GO(xcb_rectangle_next, 
 GO(xcb_register_for_special_xge, pFbpup)
 GO(xcb_reparent_window, pFbuuWW)
-//GO(xcb_reparent_window_checked, 
+GO(xcb_reparent_window_checked, pFbuuWW)
 GO(xcb_request_check, pFbu)
 //GO(xcb_rgb_end, 
 //GO(xcb_rgb_next, 
