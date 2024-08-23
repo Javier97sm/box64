@@ -84,9 +84,14 @@ EXPORT int Initialize()
     int argc = 2;
     const char **argv = (const char**)malloc(argc * sizeof(const char*));
     // Set dummy argv[0] and dummy argv[1], which are required by initialize().
-    argv[0] = (const char*)malloc(512);
+    
+    // Allocate a single block of memory to hold both strings contiguously
+    char *block = (char*)malloc(1024);  // Enough space for both "param1" and "param2"
+
+    argv[0] = block;
+    argv[1] = block + 512;  // argv[1] starts 512 bytes after argv[0]
+
     strcpy((char*)argv[0], "/usr/local/bin/box64");
-    argv[1] = (const char*)malloc(512);
     strcpy((char*)argv[1], dummy_x64_library);
 
     x64emu_t* dummy_emu = NULL;
