@@ -17,74 +17,20 @@
 
 extern char** environ;
 
-static const char* dummyX64Library()
+void* my_dlopen(x64emu_t* emu, void *filename, int flag);   // defined in wrappedlibdl.c
+
+EXPORT elfheader_t* LoadX64Library(const char* x64_libname)
 {
-    // Box64 has not been initialized yet, so we cannot use printf_log(LOG_NONE, ...) now.
-    // Instead using fprintf(stderr, ...) to print error messages.
-
-    // Read the env BOX64_LD_LIBRARY_PATH.
-    const char* ld_library_path = getenv("BOX64_LD_LIBRARY_PATH");
-    if (!ld_library_path) {
-        fprintf(stderr, "Error: BOX64_LD_LIBRARY_PATH environment variable is not set.\n");
-        return NULL;
-    }
-
-    DIR* dir = opendir(ld_library_path);
-    if (!dir) {
-        fprintf(stderr, "Error: Failed to open directory %s\n", ld_library_path);
-        return NULL;
-    }
-
-    struct dirent* entry;
-    char selected_file[PATH_MAX] = { 0 };
-    int selected_file_found = 0;
-
-    // Loop through directory entries to find an x86_64 format .so* file
-    while ((entry = readdir(dir)) != NULL) {
-        snprintf(selected_file, sizeof(selected_file), "%s/%s", ld_library_path, entry->d_name);
-        if (FileExist(selected_file, IS_FILE | IS_EXECUTABLE) && 0 == strcmp(entry->d_name, "libdummy.so")) {
-            selected_file_found = 1;
-            break;
-        }
-    }
-
-    closedir(dir);
-
-    if (!selected_file_found) {
-        fprintf(stderr, "Error: No x86_64 format .so* files found in %s\n", ld_library_path);
-        return NULL;
-    }
-
-    char resolved_path[PATH_MAX];
-    char *result = realpath(selected_file, resolved_path);
-    if (!result) {
-        fprintf(stderr, "Error: Failed to resolve the path of %s\n", selected_file);
-        return NULL;
-    }
-
-    // Allocate memory for the full path and copy the selected file path
-    char* full_path = (char*)malloc(strlen(resolved_path) + 1);
-    if (!full_path) {
-        fprintf(stderr, "Error: Memory allocation failed.\n");
-        return NULL;
-    }
-
-    strcpy(full_path, resolved_path);
-    return full_path;
-}
-
-EXPORT int Initialize()
-{
-    const char* dummy_x64_library = dummyX64Library();
-    if (!dummy_x64_library) {
-        printf_log(LOG_NONE, "Dummy x64 library not found !");
+    // Init box64 thread
+    if (!x64_libname) {
+        printf_log(LOG_NONE, "x64 library not found!");
         abort();
     }
 
     int argc = 2;
     const char **argv = (const char**)malloc(argc * sizeof(const char*));
     // Set dummy argv[0] and dummy argv[1], which are required by initialize().
-    
+
     // Allocate a single block of memory to hold both strings contiguously
     char *block = (char*)malloc(1024);  // Enough space for both "param1" and "param2"
 
@@ -92,7 +38,7 @@ EXPORT int Initialize()
     argv[1] = block + 512;  // argv[1] starts 512 bytes after argv[0]
 
     strcpy((char*)argv[0], "/usr/local/bin/box64");
-    strcpy((char*)argv[1], dummy_x64_library);
+    strcpy((char*)argv[1], x64_libname);
 
     x64emu_t* dummy_emu = NULL;
     elfheader_t* dummy_elf_header = NULL;
@@ -100,14 +46,8 @@ EXPORT int Initialize()
         return -1;
     }
 
-    printf_log(LOG_DEBUG, "libbox64.so initialzied.\n");
-    return 0;
-}
+    printf_log(LOG_DEBUG, "%s initialzied.\n", x64_libname);
 
-void* my_dlopen(x64emu_t* emu, void *filename, int flag);   // defined in wrappedlibdl.c
-
-EXPORT elfheader_t* LoadX64Library(const char* x64_libname)
-{
     // 1. Load the library.
     // Note: We choose binding all symbols when opening the library,
     // which might output some warnings like "Warning: Weak Symbol
