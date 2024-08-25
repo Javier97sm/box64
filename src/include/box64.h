@@ -9,8 +9,10 @@ EXPORT int Initialize();
 // Load a x64 library of a x64 shared library.
 EXPORT elfheader_t* LoadX64Library(const char* x64_libname);
 
+EXPORT uintptr_t GetX64FunctionAddress(elfheader_t* elf_header, const char* funcname);
+
 // Run a x64 function of a x64 shared library.
-EXPORT uintptr_t RunX64Function(elfheader_t* elf_header, const char *funcname, int nargs, ...);
+EXPORT uintptr_t RunX64Function(uintptr_t x64_symbol_addr, int nargs, ...);
 
 // Build a bridge for an arm64 symbol, so that emulator would know
 // this symbol should be called in arm64 world.

@@ -14,11 +14,16 @@
 
 // Built with `gcc -g test34.c -o test34 -ldl -lpthread`
 
-typedef intptr_t (*RunFuncWithEmulatorFunction)(const void *, const char *);
-static RunFuncWithEmulatorFunction RunFuncWithEmulator = NULL;
-
 typedef intptr_t (*LoadLibraryWithEmulatorFunction)(const char*);
 static LoadLibraryWithEmulatorFunction LoadLibraryWithEmulator = NULL;
+
+typedef intptr_t (*GetFunctionWithEmulatorFunction)(const void *, const char *);
+static GetFunctionWithEmulatorFunction GetFunctionWithEmulator = NULL;
+
+typedef uintptr_t (*RunFuncWithEmulatorFunction)(const void *, int, ...);
+static RunFuncWithEmulatorFunction RunFuncWithEmulator = NULL;
+
+
 
 typedef intptr_t lib_eld_handle;
 
@@ -40,6 +45,12 @@ static void InitBox64() {
         abort();
     }
 
+    GetFunctionWithEmulator = dlsym(box64_lib_handle, "GetX64FunctionAddress");
+    if (!GetFunctionWithEmulator) {
+        fprintf(stderr, "Error getting symbol \"GetX64FunctionAddress\" from box64 library: %s\n", dlerror());
+        abort();
+    }
+
     RunFuncWithEmulator = dlsym(box64_lib_handle, "RunX64Function");
     if (!RunFuncWithEmulator) {
         fprintf(stderr, "Error getting symbol \"RunX64Function\" from box64 library: %s\n", dlerror());
@@ -58,7 +69,8 @@ int main() {
     InitBox64();
     
     lib_eld_handle lib = LoadLibraryWithEmulator("/home/javier/Documents/Github/box64/tests/libx64functions1.so");
-    char* x64_str = RunFuncWithEmulator(lib, "hello_word_str");
+    void* funcAddr = GetFunctionWithEmulator(lib, "hello_word_str");
+    char* x64_str = RunFuncWithEmulator(funcAddr, 0);
     printf("%s\n",x64_str);
 
     printf("All done.\n");
