@@ -29,13 +29,25 @@ typedef intptr_t lib_eld_handle;
 
 static void InitBox64() {
     char box64_lib_path[PATH_MAX] = "/home/javier/Documents/Github/box64/build/libbox64.so";
-    char box64_ld_library_path[PATH_MAX] = "/home/javier/Documents/Github/box64/tests";
+    char box64_ld_library_path[PATH_MAX] = "/home/javier/Documents/Github/box64/x64lib";
 
     setenv("BOX64_LD_LIBRARY_PATH", box64_ld_library_path, 1);
 
     void* box64_lib_handle = dlopen(box64_lib_path, RTLD_GLOBAL | RTLD_NOW);
     if (!box64_lib_handle) {
         fprintf(stderr, "Error loading box64 library: %s\n", dlerror());
+        abort();
+    }
+
+    void* box64_init_func = dlsym(box64_lib_handle, "Initialize");
+    if (!box64_init_func) {
+        fprintf(stderr, "Error getting symbol \"Initialize\" from box64 library: %s\n", dlerror());
+        abort();
+    }
+    
+    int (*Initialize)() = box64_init_func;
+    if (Initialize() != 0) {
+        fprintf(stderr, "Error initializing box64 library\n");
         abort();
     }
 
