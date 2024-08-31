@@ -4101,6 +4101,7 @@ wrappedicuuc72:
 wrappedicuuc73:
 wrappedicuuc74:
 wrappedidn2:
+wrappedjack:
 wrappedkrb5:
 - iFppppppipp:
   - krb5_get_init_creds_password
