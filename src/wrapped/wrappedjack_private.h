@@ -4,9 +4,9 @@
 
 GO(jack_free, vFp)
 GOM(jack_on_shutdown, vFEppp)
-GO(jack_port_name, vFv)
-GO(jack_connect, vFv)
-GO(jack_set_process_callback, vFv)
+GO(jack_port_name, pFp)
+GO(jack_connect, iFppp)
+GO(jack_set_process_callback, iFppp)
 GO(jack_set_buffer_size_callback, vFv)
 GO(jack_port_register, vFv)
 GO(jack_midi_event_get, vFv)

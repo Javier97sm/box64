@@ -41,11 +41,11 @@ GO(14)  \
 GO(15)  \
 
 // on_shutdown
-#define GO(A)                                                           \
-static uintptr_t my_on_shutdown_fct_##A = 0;                            \
-static void my_on_shutdown_##A(void* ext_client, void* arg)             \
-{                                                                       \
-    RunFunctionFmt(my_on_shutdown_fct_##A, "pp", ext_client, arg);      \
+#define GO(A)                                               \
+static uintptr_t my_on_shutdown_fct_##A = 0;                \
+static void my_on_shutdown_##A(void* arg)                   \
+{                                                           \
+    RunFunctionFmt(my_on_shutdown_fct_##A, "p",  arg);      \
 }
 SUPER()
 #undef GO
