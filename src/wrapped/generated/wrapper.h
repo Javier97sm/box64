@@ -1833,6 +1833,7 @@ void pFpppui(x64emu_t *emu, uintptr_t fnc);
 void pFpppup(x64emu_t *emu, uintptr_t fnc);
 void pFpppli(x64emu_t *emu, uintptr_t fnc);
 void pFpppLi(x64emu_t *emu, uintptr_t fnc);
+void pFpppLL(x64emu_t *emu, uintptr_t fnc);
 void pFppppi(x64emu_t *emu, uintptr_t fnc);
 void pFppppu(x64emu_t *emu, uintptr_t fnc);
 void pFppppL(x64emu_t *emu, uintptr_t fnc);

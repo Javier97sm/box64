@@ -1795,6 +1795,7 @@
 #() pFpppup
 #() pFpppli
 #() pFpppLi
+#() pFpppLL
 #() pFppppi
 #() pFppppu
 #() pFppppL
@@ -4104,6 +4105,13 @@ wrappedidn2:
 wrappedjack:
 - vFppp:
   - jack_on_shutdown
+- iFppp:
+  - jack_set_buffer_size_callback
+  - jack_set_port_registration_callback
+  - jack_set_process_callback
+  - jack_set_sample_rate_callback
+- pFpip:
+  - jack_client_open
 wrappedkrb5:
 - iFppppppipp:
   - krb5_get_init_creds_password

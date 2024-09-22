@@ -11,6 +11,7 @@
 #include "bridge.h"
 #include "librarian/library_private.h"
 #include "x64emu.h"
+#include "myalign.h"
 
 #include "generated/wrappedjackdefs.h"
 
@@ -91,7 +92,7 @@ static void* find_set_process_Fct(void* fct)
 static uintptr_t my_set_buffer_size_fct_##A = 0;                        \
 static int my_set_buffer_size_##A(uint32_t nframes, void* arg)          \
 {                                                                       \
-    RunFunctionFmt(my_set_buffer_size_fct_##A, "up",  nframes, arg);    \
+    RunFunctionFmt(my_set_buffer_size_fct_##A, "up", nframes, arg);     \
 }
 SUPER()
 #undef GO
@@ -109,6 +110,52 @@ static void* find_set_buffer_size_Fct(void* fct)
     return NULL;
 }
 
+// set_port_registration
+#define GO(A)                                                                   \
+static uintptr_t my_set_port_registration_fct_##A = 0;                          \
+static void my_set_port_registration_##A(uint32_t port, int reg, void* arg)     \
+{                                                                               \
+    RunFunctionFmt(my_set_port_registration_fct_##A, "uip", port, reg, arg);    \
+}
+SUPER()
+#undef GO
+static void* find_set_port_registration_Fct(void* fct)
+{
+    if(!fct) return fct;
+    if(GetNativeFnc((uintptr_t)fct))  return GetNativeFnc((uintptr_t)fct);
+    #define GO(A) if(my_set_port_registration_fct_##A == (uintptr_t)fct) return my_set_port_registration_##A;
+    SUPER()
+    #undef GO
+    #define GO(A) if(my_set_port_registration_fct_##A == 0) {my_set_port_registration_fct_##A = (uintptr_t)fct; return my_set_port_registration_##A; }
+    SUPER()
+    #undef GO
+    printf_log(LOG_NONE, "Warning, no more slot for jack set port registration callback\n");
+    return NULL;
+}
+
+// set_port_registration
+#define GO(A)                                                           \
+static uintptr_t my_set_sample_rate_fct_##A = 0;                        \
+static int my_set_sample_rate_##A(uint32_t nframes, void* arg)          \
+{                                                                       \
+    RunFunctionFmt(my_set_sample_rate_fct_##A, "up", nframes, arg);     \
+}
+SUPER()
+#undef GO
+static void* find_set_sample_rate_callback_Fct(void* fct)
+{
+    if(!fct) return fct;
+    if(GetNativeFnc((uintptr_t)fct))  return GetNativeFnc((uintptr_t)fct);
+    #define GO(A) if(my_set_sample_rate_fct_##A == (uintptr_t)fct) return my_set_sample_rate_##A;
+    SUPER()
+    #undef GO
+    #define GO(A) if(my_set_sample_rate_fct_##A == 0) {my_set_sample_rate_fct_##A = (uintptr_t)fct; return my_set_sample_rate_##A; }
+    SUPER()
+    #undef GO
+    printf_log(LOG_NONE, "Warning, no more slot for jack set sample rate callback\n");
+    return NULL;
+}
+
 EXPORT void my_jack_on_shutdown(x64emu_t* emu, void* ext_client, void* callback, void* arg)
 {
     my->jack_on_shutdown(ext_client, find_on_shutdown_Fct(callback), arg);
@@ -122,6 +169,16 @@ EXPORT int my_jack_set_process_callback(x64emu_t* emu, void* ext_client, void* c
 EXPORT int my_jack_set_buffer_size_callback(x64emu_t* emu, void* ext_client, void* callback, void* arg)
 {
     my->jack_set_buffer_size_callback(ext_client, find_set_buffer_size_Fct(callback), arg);
+}
+
+EXPORT int my_jack_set_port_registration_callback(x64emu_t* emu, void* ext_client, void* callback, void* arg)
+{
+    my->jack_set_port_registration_callback(ext_client, find_set_port_registration_Fct(callback), arg);
+}
+
+EXPORT int my_jack_set_sample_rate_callback(x64emu_t* emu, void* ext_client, void* callback, void* arg)
+{
+    my->jack_set_sample_rate_callback(ext_client, find_set_sample_rate_callback_Fct(callback), arg);
 }
 
 #include "wrappedlib_init.h"

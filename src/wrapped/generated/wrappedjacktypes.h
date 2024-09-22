@@ -12,8 +12,15 @@
 #endif
 
 typedef void (*vFppp_t)(void*, void*, void*);
+typedef int32_t (*iFppp_t)(void*, void*, void*);
+typedef void* (*pFpip_t)(void*, int32_t, void*);
 
 #define SUPER() ADDED_FUNCTIONS() \
-	GO(jack_on_shutdown, vFppp_t)
+	GO(jack_on_shutdown, vFppp_t) \
+	GO(jack_set_buffer_size_callback, iFppp_t) \
+	GO(jack_set_port_registration_callback, iFppp_t) \
+	GO(jack_set_process_callback, iFppp_t) \
+	GO(jack_set_sample_rate_callback, iFppp_t) \
+	GO(jack_client_open, pFpip_t)
 
 #endif // __wrappedjackTYPES_H_
