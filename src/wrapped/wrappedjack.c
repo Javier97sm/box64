@@ -49,7 +49,6 @@ static void my_on_shutdown_##A(void* arg)                   \
 }
 SUPER()
 #undef GO
-
 static void* find_on_shutdown_Fct(void* fct)
 {
     if(!fct) return fct;
@@ -64,9 +63,37 @@ static void* find_on_shutdown_Fct(void* fct)
     return NULL;
 }
 
+// set_process
+#define GO(A)                                                       \
+static uintptr_t my_set_process_fct_##A = 0;                        \
+static int my_set_process_##A(uint32_t nframes, void* arg)          \
+{                                                                   \
+    RunFunctionFmt(my_set_process_fct_##A, "up",  nframes, arg);    \
+}
+SUPER()
+#undef GO
+static void* find_set_process_Fct(void* fct)
+{
+    if(!fct) return fct;
+    if(GetNativeFnc((uintptr_t)fct))  return GetNativeFnc((uintptr_t)fct);
+    #define GO(A) if(my_set_process_fct_##A == (uintptr_t)fct) return my_set_process_##A;
+    SUPER()
+    #undef GO
+    #define GO(A) if(my_set_process_fct_##A == 0) {my_set_process_fct_##A = (uintptr_t)fct; return my_on_shutdown_##A; }
+    SUPER()
+    #undef GO
+    printf_log(LOG_NONE, "Warning, no more slot for jack set process callback\n");
+    return NULL;
+}
+
 EXPORT void my_jack_on_shutdown(x64emu_t* emu, void* ext_client, void* callback, void* arg)
 {
     my->jack_on_shutdown(ext_client, find_on_shutdown_Fct(callback), arg);
+}
+
+EXPORT int my_jack_set_process_callback(x64emu_t* emu, void* ext_client, void* callback, void* arg)
+{
+    my->jack_on_shutdown(ext_client, find_set_process_Fct(callback), arg);
 }
 
 #include "wrappedlib_init.h"
