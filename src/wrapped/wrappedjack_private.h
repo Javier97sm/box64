@@ -14,7 +14,7 @@ GO(jack_port_get_buffer, vFv)
 GO(jack_get_ports, vFv)
 GO(jack_midi_get_event_count, vFv)
 GO(jack_set_port_registration_callback, vFv)
-GO(jack_get_sample_rate, vFv
+GO(jack_get_sample_rate, vFv)
 GO(jack_set_sample_rate_callback, vFv)
 GO(jack_client_close, vFv)
 GO(jack_client_open, vFv)

@@ -6,6 +6,7 @@
 
 #include "wrappedlibs.h"
 
+#include "debug.h"
 #include "wrapper.h"
 #include "bridge.h"
 #include "librarian/library_private.h"
@@ -20,6 +21,25 @@ const char* jackName = "libjack.so.0";
 
 #include "wrappercallback.h"
 
+// utility functions
+#define SUPER() \
+GO(0)   \
+GO(1)   \
+GO(2)   \
+GO(3)   \
+GO(4)   \
+GO(5)   \
+GO(6)   \
+GO(7)   \
+GO(8)   \
+GO(9)   \
+GO(10)  \
+GO(11)  \
+GO(12)  \
+GO(13)  \
+GO(14)  \
+GO(15)  \
+
 // on_shutdown
 #define GO(A)                                                           \
 static uintptr_t my_on_shutdown_fct_##A = 0;                            \
@@ -29,6 +49,7 @@ static void my_on_shutdown_##A(void* ext_client, void* arg)             \
 }
 SUPER()
 #undef GO
+
 static void* find_on_shutdown_Fct(void* fct)
 {
     if(!fct) return fct;

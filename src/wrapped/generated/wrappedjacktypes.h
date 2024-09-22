@@ -11,7 +11,9 @@
 #define ADDED_FUNCTIONS() 
 #endif
 
+typedef void (*vFppp_t)(void*, void*, void*);
 
-#define SUPER() ADDED_FUNCTIONS()
+#define SUPER() ADDED_FUNCTIONS() \
+	GO(jack_on_shutdown, vFppp_t)
 
 #endif // __wrappedjackTYPES_H_
