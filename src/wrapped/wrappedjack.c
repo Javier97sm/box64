@@ -79,10 +79,33 @@ static void* find_set_process_Fct(void* fct)
     #define GO(A) if(my_set_process_fct_##A == (uintptr_t)fct) return my_set_process_##A;
     SUPER()
     #undef GO
-    #define GO(A) if(my_set_process_fct_##A == 0) {my_set_process_fct_##A = (uintptr_t)fct; return my_on_shutdown_##A; }
+    #define GO(A) if(my_set_process_fct_##A == 0) {my_set_process_fct_##A = (uintptr_t)fct; return my_set_process_##A; }
     SUPER()
     #undef GO
     printf_log(LOG_NONE, "Warning, no more slot for jack set process callback\n");
+    return NULL;
+}
+
+// set_buffer_size
+#define GO(A)                                                           \
+static uintptr_t my_set_buffer_size_fct_##A = 0;                        \
+static int my_set_buffer_size_##A(uint32_t nframes, void* arg)          \
+{                                                                       \
+    RunFunctionFmt(my_set_buffer_size_fct_##A, "up",  nframes, arg);    \
+}
+SUPER()
+#undef GO
+static void* find_set_buffer_size_Fct(void* fct)
+{
+    if(!fct) return fct;
+    if(GetNativeFnc((uintptr_t)fct))  return GetNativeFnc((uintptr_t)fct);
+    #define GO(A) if(my_set_buffer_size_fct_##A == (uintptr_t)fct) return my_set_buffer_size_##A;
+    SUPER()
+    #undef GO
+    #define GO(A) if(my_set_buffer_size_fct_##A == 0) {my_set_buffer_size_fct_##A = (uintptr_t)fct; return my_set_buffer_size_##A; }
+    SUPER()
+    #undef GO
+    printf_log(LOG_NONE, "Warning, no more slot for jack set buffer size callback\n");
     return NULL;
 }
 
@@ -93,7 +116,12 @@ EXPORT void my_jack_on_shutdown(x64emu_t* emu, void* ext_client, void* callback,
 
 EXPORT int my_jack_set_process_callback(x64emu_t* emu, void* ext_client, void* callback, void* arg)
 {
-    my->jack_on_shutdown(ext_client, find_set_process_Fct(callback), arg);
+    my->jack_set_process_callback(ext_client, find_set_process_Fct(callback), arg);
+}
+
+EXPORT int my_jack_set_buffer_size_callback(x64emu_t* emu, void* ext_client, void* callback, void* arg)
+{
+    my->jack_set_buffer_size_callback(ext_client, find_set_buffer_size_Fct(callback), arg);
 }
 
 #include "wrappedlib_init.h"
