@@ -3,7 +3,7 @@
 #endif
 
 GO(jack_free, vFp)
-GO(jack_on_shutdown, vFEppp)
+GOM(jack_on_shutdown, vFEppp)
 GO(jack_port_name, vFv)
 GO(jack_connect, vFv)
 GO(jack_set_process_callback, vFv)
